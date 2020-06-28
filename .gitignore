@@ -1,4 +1,5 @@
-.sass-cache/
+modules/
+themes/
 *.css.map
 *.sass.map
 *.scss.map
