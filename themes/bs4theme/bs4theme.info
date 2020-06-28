@@ -1,0 +1,24 @@
+name        = bs4theme
+description = ...
+screenshot  = bs4theme.png
+core        = 7.x
+
+regions[notice] = 'Важное объявление по сайту'
+regions[main_contacts]     = 'Контакты в шапке сайта'
+regions[main_navigation]     = 'Основная навигация по сайту'
+regions[content]        = 'Content'
+regions[footer]         = 'Footer'
+regions[page_top]       = 'Page top'
+regions[page_bottom]    = 'Page bottom'
+regions[help]           = 'Help'
+
+stylesheets[all][] = css/style.min.css
+
+scripts[] = js/bootstrap/util.js
+scripts[] = js/bootstrap/collapse.js
+scripts[] = js/bootstrap/dropdown.js
+scripts[] = js/bootstrap/modal.js
+scripts[] = js/bootstrap/scrollspy.js
+scripts[] = js/bootstrap/alert.js
+scripts[] = js/belka.js
+scripts[] = js/animations.js
