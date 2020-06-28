@@ -6,14 +6,11 @@
 *.scss.map
 *_old.css
 
-css/
+_dev/
 files/css/
 files/js/
 files/languages/
 modules/
-node_modules/
-src/
 
-gulpfile.js
 settings.php
 
