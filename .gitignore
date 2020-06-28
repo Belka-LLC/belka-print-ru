@@ -3,3 +3,8 @@ themes/
 *.css.map
 *.sass.map
 *.scss.map
+_*
+settings.php
+files/css/
+files/js/
+files/languages/
