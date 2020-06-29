@@ -6,7 +6,6 @@
 *.scss.map
 *_old.css
 
-_dev/
 files/css/
 files/js/
 files/languages/
