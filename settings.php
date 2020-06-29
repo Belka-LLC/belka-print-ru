@@ -6,7 +6,7 @@ $databases = array (
     'default' => 
     array (
       'driver' => 'mysql',
-      'database' => 'belkap_print',
+      'database' => 'belkap_belka_print',
       'username' => 'belkap_admin',
       'password' => 'XXAK567819',
       'host' => 'localhost',
@@ -16,7 +16,7 @@ $databases = array (
   ),
 );
 
-$update_free_access = TRUE;
+$update_free_access = FALSE;
 
 $drupal_hash_salt = 'YV-Xp9ppicYbR9CArFjlLvm__DPdRgIAFiGTYloWlK0';
 
