@@ -1,50 +1,57 @@
+"use strict";
+
 (function () {
   // console.log('belka.js');
-  var isStorageSupport = true;
-  var closeInfo = "";
+
+  // проверка поддержки localStorage
+  let isStorageSupport = true;
+  let shownNoticeDate = "";
   try {
-    closeInfo = localStorage.getItem("notice");
+    shownNoticeDate = localStorage.getItem("bp_notice_date");
   } catch (err) {
     isStorageSupport = false;
   }
 
-  var infoModal = document.querySelector(".notice");
+  // получение даты объявления
+  let divNotice = document.querySelector(".notice");
+  let noticeDate = divNotice.querySelector(".notice__section").getAttribute("date");
 
+  // сравнение даты объявления с уже просмотренным и скрытие или отображение divNotice
   if (isStorageSupport) {
-    if (closeInfo == "closed") {
-      infoModal.style.display = "none";
+    if (shownNoticeDate == noticeDate) {
+      divNotice.style.display = "none";
     } else {
-      infoModal.style.display = "";
+      divNotice.style.display = "";
     }
   }
 
-  infoModal.addEventListener("click", function (evt) {
+  // закрытие модального окна divNotice
+  divNotice.addEventListener("click", function (evt) {
     evt.preventDefault();
-    infoModal.style.display = "none";
-    localStorage.setItem("notice", "closed");
+    divNotice.style.display = "none";
+    localStorage.setItem("bp_notice_date", noticeDate);
   });
-
   window.addEventListener("keydown", function (evt) {
     if (evt.keyCode === 27) {
       evt.preventDefault();
-      if (infoModal.style.display != "none") {
-        infoModal.style.display = "none";
-        localStorage.setItem("notice", "closed");
+      if (divNotice.style.display != "none") {
+        divNotice.style.display = "none";
+        localStorage.setItem("bp_notice_date", noticeDate);
       }
     }
   });
 
+  // скрытие "висячего" анонса
   if (document.querySelector('body').classList.contains('front')) {
     anons_count();
     window.addEventListener('resize', anons_count);
   }
-
   function anons_count(evt) {
-    var anonses = document.querySelectorAll('.anons');
+    let anonses = document.querySelectorAll('.anons');
     if (anonses.length) {
-      var anons_count = anonses.length;
-      var anonses_to_hide = 0;
-      var window_width = window.innerWidth;
+      let anons_count = anonses.length;
+      let anonses_to_hide = 0;
+      let window_width = window.innerWidth;
       anonses[anons_count - 1].classList.add('d-flex');
       anonses[anons_count - 1].classList.remove('d-none');
 
