@@ -1,8 +1,10 @@
 _dev/
+modules/
 files/css/
 files/js/
 files/languages/
-modules/
+files/styles/
+files/xmlsitemap/
 
 settings.php
 
