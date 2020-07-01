@@ -37,18 +37,25 @@
              Выпадающее меню
     --------------------------------------*/
     $('.folder').on('click mouseenter focus', function (event) {
+      // on touch-devices: touch is mouseenter+click
+      // console.log("---------------");
+      // console.log(event.type);
+      // console.log($(this).attr("class"));
+
+      correctSideOffset($(this));
 
       // folding process
       if (!((event.type == "mouseenter") && ($('html').hasClass("touch-device")))) {
         // exclude (mouseenter on touch-devices)
 
-        correctSideOffset($(this));
-
         if ($(this).hasClass("folder--opened")) {
-          folding($(this)); // close folder
+          // close folder
+          folding($(this));
         } else {
-          unfolding($(this)); // open folder
+          // open folder
+          unfolding($(this));
         }
+
       }
 
       function unfolding($folder) {
@@ -58,11 +65,27 @@
         $folder.addClass("folder--opened");
       }
       function folding($folder) {
-        // console.log("folding");
+        console.log("folding");
         $folder.children(".folder__wrap").removeClass("folder__wrap--show");
         $folder.children(".folder__wrap").height(0);
         $folder.children(".folder__toggle").blur();
         $folder.removeClass("folder--opened");
+      }
+      function correctSideOffset($folder) {
+        var $folderWrap = $folder.children(".folder__wrap");
+        // Correct side offset of unfolded menu
+        var minOffset = 0;
+        var offsetTop = $folderWrap.offset().top;
+        var offsetLeft = $folderWrap.offset().left;
+        var offsetRight = $(".main-nav__navbar").width() - offsetLeft - $folderWrap.width();
+        if ((offsetLeft < minOffset) && (offsetRight > minOffset)) $folderWrap.offset({
+          top: offsetTop,
+          left: minOffset
+        });
+        if ((offsetRight < minOffset) && (offsetLeft > minOffset)) $folderWrap.offset({
+          top: top,
+          left: $(".main-nav__navbar").width() - $folderWrap.width() - minOffset
+        });
       }
     });
 
@@ -79,23 +102,6 @@
       $(this).children(".folder__toggle").blur();
     });
 
-    function correctSideOffset($folder) {
-      console.log('correcting position');
-      var $folderWrap = $folder.children(".folder__wrap");
-      // Correct side offset of unfolded menu
-      var minOffset = 1;
-      var offsetTop = $folderWrap.offset().top;
-      var offsetLeft = $folderWrap.offset().left;
-      var offsetRight = $(window).width() - offsetLeft - $folderWrap.outerWidth();
-      if ((offsetLeft < minOffset) && (offsetRight > minOffset)) $folderWrap.offset({
-        top: offsetTop,
-        left: minOffset
-      });
-      if ((offsetRight < minOffset) && (offsetLeft > minOffset)) $folderWrap.offset({
-        top: top,
-        left: $(window).width() - $folderWrap.outerWidth() - minOffset
-      });
-    }
 
     /*
     ** Плавная прокрутка по якорной ссылке

@@ -1,4 +1,4 @@
-"use strict";
+"use strict"
 
 (function () {
   // console.log('belka.js');
@@ -12,11 +12,9 @@
     isStorageSupport = false;
   }
 
-  // получение даты объявления
   let divNotice = document.querySelector(".notice");
   let noticeDate = divNotice.querySelector(".notice__section").getAttribute("date");
 
-  // сравнение даты объявления с уже просмотренным и скрытие или отображение divNotice
   if (isStorageSupport) {
     if (shownNoticeDate == noticeDate) {
       divNotice.style.display = "none";
@@ -25,12 +23,12 @@
     }
   }
 
-  // закрытие модального окна divNotice
   divNotice.addEventListener("click", function (evt) {
     evt.preventDefault();
     divNotice.style.display = "none";
     localStorage.setItem("bp_notice_date", noticeDate);
   });
+
   window.addEventListener("keydown", function (evt) {
     if (evt.keyCode === 27) {
       evt.preventDefault();
@@ -41,11 +39,14 @@
     }
   });
 
-  // скрытие "висячего" анонса
-  if (document.querySelector('body').classList.contains('front')) {
-    anons_count();
-    window.addEventListener('resize', anons_count);
-  }
+  /**
+   * Удаление висячего анонса
+   */
+  // if (document.querySelector('body').classList.contains('front')) {
+  //   anons_count();
+  //   window.addEventListener('resize', anons_count);
+  // }
+
   function anons_count(evt) {
     let anonses = document.querySelectorAll('.anons');
     if (anonses.length) {
