@@ -48,31 +48,6 @@
   //   anons_count();
   //   window.addEventListener('resize', anons_count);
   // }
-
-<<<<<<< HEAD
-//   function anons_count(evt) {
-//     let anonses = document.querySelectorAll('.anons');
-//     if (anonses.length) {
-//       let anons_count = anonses.length;
-//       let anonses_to_hide = 0;
-//       let window_width = window.innerWidth;
-//       anonses[anons_count - 1].classList.add('d-flex');
-//       anonses[anons_count - 1].classList.remove('d-none');
-
-//       if (window_width >= 1200) {
-//         anonses_to_hide = anons_count % 4;
-//       } else {
-//         if (window_width >= 992) {
-//           anonses_to_hide = anons_count % 3;
-//         }
-//       }
-//       if (anonses_to_hide == 1) {
-//         anonses[anons_count - 1].classList.remove('d-flex');
-//         anonses[anons_count - 1].classList.add('d-none');
-//       }
-//     }
-//   }
-=======
   // function anons_count(evt) {
   //   const anonses = document.querySelectorAll('.anons');
   //   if (anonses.length) {
@@ -81,8 +56,6 @@
   //     const window_width = window.innerWidth;
   //     anonses[anons_count - 1].classList.add('d-flex');
   //     anonses[anons_count - 1].classList.remove('d-none');
->>>>>>> 05474297b7836a8ddf59f4607ee57f9d997fda38
-
   //     if (window_width >= 1200) {
   //       anonses_to_hide = anons_count % 4;
   //     } else {
