@@ -1,40 +1,42 @@
-"use strict";
+'use strict';
 
-(function () {
+(function() {
   // console.log('belka.js');
 
   // проверка поддержки localStorage
   let isStorageSupport = true;
-  let shownNoticeDate = "";
+  let shownNoticeDate = '';
   try {
-    shownNoticeDate = localStorage.getItem("bp_notice_date");
+    shownNoticeDate = localStorage.getItem('bp_notice_date');
   } catch (err) {
     isStorageSupport = false;
   }
 
-  let divNotice = document.querySelector(".notice");
-  let noticeDate = divNotice.querySelector(".notice__section").getAttribute("date");
+  const divNotice = document.querySelector('.notice');
+  const noticeDate = divNotice
+      .querySelector('.notice__section')
+      .getAttribute('date');
 
   if (isStorageSupport) {
     if (shownNoticeDate == noticeDate) {
-      divNotice.style.display = "none";
+      divNotice.style.display = 'none';
     } else {
-      divNotice.style.display = "";
+      divNotice.style.display = '';
     }
   }
 
-  divNotice.addEventListener("click", function (evt) {
+  divNotice.addEventListener('click', function(evt) {
     evt.preventDefault();
-    divNotice.style.display = "none";
-    localStorage.setItem("bp_notice_date", noticeDate);
+    divNotice.style.display = 'none';
+    localStorage.setItem('bp_notice_date', noticeDate);
   });
 
-  window.addEventListener("keydown", function (evt) {
+  window.addEventListener('keydown', function(evt) {
     if (evt.keyCode === 27) {
       evt.preventDefault();
-      if (divNotice.style.display != "none") {
-        divNotice.style.display = "none";
-        localStorage.setItem("bp_notice_date", noticeDate);
+      if (divNotice.style.display != 'none') {
+        divNotice.style.display = 'none';
+        localStorage.setItem('bp_notice_date', noticeDate);
       }
     }
   });
@@ -47,6 +49,7 @@
   //   window.addEventListener('resize', anons_count);
   // }
 
+<<<<<<< HEAD
 //   function anons_count(evt) {
 //     let anonses = document.querySelectorAll('.anons');
 //     if (anonses.length) {
@@ -69,5 +72,28 @@
 //       }
 //     }
 //   }
+=======
+  // function anons_count(evt) {
+  //   const anonses = document.querySelectorAll('.anons');
+  //   if (anonses.length) {
+  //     const anons_count = anonses.length;
+  //     let anonses_to_hide = 0;
+  //     const window_width = window.innerWidth;
+  //     anonses[anons_count - 1].classList.add('d-flex');
+  //     anonses[anons_count - 1].classList.remove('d-none');
+>>>>>>> 05474297b7836a8ddf59f4607ee57f9d997fda38
 
+  //     if (window_width >= 1200) {
+  //       anonses_to_hide = anons_count % 4;
+  //     } else {
+  //       if (window_width >= 992) {
+  //         anonses_to_hide = anons_count % 3;
+  //       }
+  //     }
+  //     if (anonses_to_hide == 1) {
+  //       anonses[anons_count - 1].classList.remove('d-flex');
+  //       anonses[anons_count - 1].classList.add('d-none');
+  //     }
+  //   }
+  // }
 })();
