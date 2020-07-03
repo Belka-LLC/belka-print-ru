@@ -111,9 +111,9 @@
     ** Плавная прокрутка по якорной ссылке
     */
     $('body').on('click', '.local-menu [href*="#"]', function(e) {
-      const fixed_offset = 50;
+      const fixedOffset = 50;
       $('html,body').stop().animate({
-        scrollTop: $(this.hash).offset().top - fixed_offset,
+        scrollTop: $(this.hash).offset().top - fixedOffset,
       }, 500);
       e.preventDefault();
     });
