@@ -24,7 +24,7 @@
         $('.summa').addClass('fixed-bottom');
       };
       /** Активизация main-menu__item */
-      $navLinks = $('.main-menu__link');
+      const $navLinks = $('.main-menu__link');
       $navLinks.each(function(indx, element) {
         if ($(element).hasClass('active')) {
           $(element).parent().addClass('active');
@@ -138,8 +138,8 @@
   /** Подсветка столбца таблицы */
   $('tbody td, thead th:not([colspan])').hover(
       (e) => {
-        $cell = $(e.currentTarget);
-        rowHeadCells = $cell.parents('table').children('tbody').children().first().children('th').size();
+        const $cell = $(e.currentTarget);
+        const rowHeadCells = $cell.parents('table').children('tbody').children().first().children('th').size();
 
         const theadShifts = getShifts('thead');
         const tbodyShifts = getShifts('tbody');
