@@ -303,6 +303,9 @@ function bs4theme_form_alter(&$form, &$form_state, $form_id)
             $form['#attributes']['class'][0] = 'webform';
             $form['actions']['submit']['#attributes']['class'] = [];
             $form['actions']['submit']['#value'] = 'Отправить заказ в типографию';
+            $form['actions']['total'] = array(
+                '#markup' => '<div class="total">ИТОГО <span class="total__summa">300</span> руб.</div>'
+                );
             break;
     }
     // drupal_set_message('<pre>'.print_r($form['actions'], TRUE).'</pre>');
@@ -453,11 +456,12 @@ function bs4theme_fieldset($variables)
     if (!empty($element['#description'])) {
         $output .= '<div class="fieldset-description">' . $element['#description'] . '</div>';
     }
+    $output .= '<div class="webform-component__wrap">';
     $output .= $element['#children'];
     if (isset($element['#value'])) {
         $output .= $element['#value'];
     }
-    $output .= "</fieldset>\n";
+    $output .= "</div></fieldset>\n";
 
     return $output;
 }
