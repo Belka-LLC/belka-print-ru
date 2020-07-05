@@ -20,5 +20,6 @@ scripts[] = js/bootstrap/dropdown.js
 scripts[] = js/bootstrap/modal.js
 scripts[] = js/bootstrap/scrollspy.js
 scripts[] = js/bootstrap/alert.js
+scripts[] = js/jquery.maskedinput.min.js
 scripts[] = js/belka.js
 scripts[] = js/animations.js
