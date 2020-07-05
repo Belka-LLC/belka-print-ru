@@ -197,7 +197,7 @@
   */
   $('.webform input[type=file]').change(function() {
     const filename = $(this).val().replace(/.*\\/, '');
-    if (filename && !error) {
+    if (filename) {
       $(this).parent().addClass('was-validated').children('label').text(filename);
     } else {
       $(this).parent().removeClass('was-validated').children('label').text('Выберите файл...');
