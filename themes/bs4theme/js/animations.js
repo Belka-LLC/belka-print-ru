@@ -204,6 +204,17 @@
     }
   });
 
+  (function($) {
+    Drupal.behaviors.autoUploadWebform = {
+      attach: function( context, settings ) {
+        $('.upload-button').css('display', 'none');
+        $('.custom-file').on( 'change', 'input[type="file"]', function() {
+          $(this).parent().next('input[type="submit"]').mousedown();
+        });
+      },
+    };
+  })(jQuery);
+
   /**
    * Masked Input for Tel
    */

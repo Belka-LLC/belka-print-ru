@@ -656,10 +656,23 @@ function bs4theme_button(array $variables)
         'name',
         'value',
     ));
+
+    if (isset($element['#attributes']['id'])) {
+        $id_items = explode('-', $element['#attributes']['id']);
+        if (end($id_items) == 'button') {
+            $element['#attributes']['class'][] = $id_items[count($id_items)-2] . '-button';
+        }
+        // drupal_set_message('<pre>'.print_r($button_class, TRUE).'</pre>');
+    }
+
     $element['#attributes']['class'][] = 'form-' . $element['#button_type'];
     if (!empty($element['#attributes']['disabled'])) {
         $element['#attributes']['class'][] = 'form-button-disabled';
     }
+
+
+
+
     return '<input' . drupal_attributes($element['#attributes']) . ' />';
 }
 
