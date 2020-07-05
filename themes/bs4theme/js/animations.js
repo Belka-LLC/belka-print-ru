@@ -1,8 +1,10 @@
+/* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 'use strict';
 
 (function($) {
   $(document).ready(function() {
+    // Проверка на тач-пад
     $('body').on('touchstart', function(e) {
       $('html').addClass('touch-device');
     });
@@ -118,6 +120,14 @@
       e.preventDefault();
     });
 
+    /**
+     * Webform
+     */
+    $('.webform-component--vybor-nalichiya-maketa')
+        .on('click', function() {
+          $('.webform').addClass('webform--active');
+        });
+
     $(document).click(function() {
       setTimeout(function() {
         const winHeight = $(window).height();
@@ -181,4 +191,21 @@
           return index;
         }
       });
+
+  /**
+  * Загрузка файла
+  */
+  $('.webform input[type=file]').change(function() {
+    const filename = $(this).val().replace(/.*\\/, '');
+    if (filename && !error) {
+      $(this).parent().addClass('was-validated').children('label').text(filename);
+    } else {
+      $(this).parent().removeClass('was-validated').children('label').text('Выберите файл...');
+    }
+  });
+
+  /**
+   * Masked Input for Tel
+   */
+  $('.webform-component--kontaktnye-dannye--tel input').mask('(999) 999 99 99');
 })(jQuery);
