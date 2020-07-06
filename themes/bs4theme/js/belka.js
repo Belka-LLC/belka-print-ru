@@ -14,8 +14,7 @@
 
   const divNotice = document.querySelector('.notice');
   const noticeDate = divNotice
-      .querySelector('.notice__section')
-      .getAttribute('date');
+      .querySelector('.notice__section').dataset.date;
 
   if (isStorageSupport) {
     if (shownNoticeDate == noticeDate) {
