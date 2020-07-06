@@ -1,5 +1,5 @@
 <?php if ($content): ?>
-<adress class="main-contacts">
+<address class="main-contacts">
 <?php print $content; ?>
-</adress>
+</address>
 <?php endif; ?>
