@@ -44,7 +44,6 @@ if (arg(0) == "node") {
 </header>
 
 <main class="page__main">
-    <!-- region--region-content -->
     <header>
         <?php if (arg(0) == "node") : ?>
             <div class="page__banner banner" <?php if ($banner) print('style = "background-image: url(' . $banner . ')"'); ?>>
@@ -69,12 +68,10 @@ if (arg(0) == "node") {
     <?php if (((!empty($tabs) && (strlen(trim(render($tabs))) > 0))) || (!empty($action_links))) : ?>
         <div class="controls">
             <?php if (!empty($tabs) && (strlen(trim(render($tabs))) > 0)) : ?>
-                <!-- tabs -->
                 <?php print render($tabs); ?>
             <?php endif; ?>
 
             <?php if (!empty($action_links)) : ?>
-                <!-- action_links -->
                 <ul class="nav nav-pills action-links"><?php print render($action_links); ?></ul>
             <?php endif; ?>
         </div>
