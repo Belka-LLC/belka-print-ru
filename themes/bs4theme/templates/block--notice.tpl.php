@@ -1,4 +1,4 @@
-<section class="notice__section" date="<?php print render($block->css_class); ?>">
+<section class="notice__section" data-date="<?php print render($block->css_class); ?>">
 <?php print render($title_prefix); ?>
 <h4 class="sr-only">Объявление по сайту</h4>
 <?php print render($title_suffix); ?>
