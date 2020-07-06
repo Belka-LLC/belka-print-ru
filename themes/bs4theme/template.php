@@ -304,7 +304,7 @@ function bs4theme_form_alter(&$form, &$form_state, $form_id)
             $form['actions']['submit']['#attributes']['class'] = [];
             $form['actions']['submit']['#value'] = 'Отправить заказ в типографию';
             $form['actions']['total'] = array(
-                '#markup' => '<div class="total">ИТОГО <span class="total__summa">300</span> руб.</div>'
+                '#markup' => '<div class="total">ИТОГО <output class="total__summa" name="total">300</output> руб.</div>'
                 );
             break;
     }
