@@ -526,7 +526,7 @@ function bs4theme_checkboxes($variables)
     if (isset($element['#attributes']['title'])) {
         $attributes['title'] = $element['#attributes']['title'];
     }
-    return '<fieldset' . drupal_attributes($attributes) . '>' . (!empty($element['#children']) ? $element['#children'] : '') . '</fieldset>';
+    return '<div' . drupal_attributes($attributes) . '>' . (!empty($element['#children']) ? $element['#children'] : '') . '</div>';
 }
 /**
  * Returns HTML for a checkbox form element.
@@ -568,6 +568,9 @@ function bs4theme_radio($variables)
 function bs4theme_radios($variables)
 {
     $element = $variables['element'];
+
+    // drupal_set_message('<pre>'.print_r($element, TRUE).'</pre>');
+
     $attributes = array();
     if (isset($element['#id'])) {
         $attributes['id'] = $element['#id'];
@@ -579,7 +582,7 @@ function bs4theme_radios($variables)
     if (isset($element['#attributes']['title'])) {
         $attributes['title'] = $element['#attributes']['title'];
     }
-    return '<fieldset' . drupal_attributes($attributes) . '>' . (!empty($element['#children']) ? $element['#children'] : '') . '</fieldset>';
+    return '<div' . drupal_attributes($attributes) . '>' . (!empty($element['#children']) ? $element['#children'] : '') . '</div>';
 }
 
 /**
@@ -588,7 +591,9 @@ function bs4theme_radios($variables)
 function bs4theme_form_element_label($variables)
 {
     $element = $variables['element'];
-    //  kpr($element);
+    // drupal_set_message('<pre>'.print_r($element, TRUE).'</pre>');
+    if ($element['#title_display'] == 'invisible') return '';
+
     // This is also used in the installer, pre-database setup.
     $t = get_t();
 
@@ -614,7 +619,9 @@ function bs4theme_form_element_label($variables)
     }
 
     if (!empty($element['#id'])) {
+      if (!($element['#type'] == 'radios')) {
         $attributes['for'] = $element['#id'];
+      }
     }
 
     // The leading whitespace helps visually separate fields from inline labels.
