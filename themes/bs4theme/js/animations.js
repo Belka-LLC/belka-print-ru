@@ -123,7 +123,7 @@
     /**
      * Webform
      */
-    $('.webform-component--vybor-nalichiya-maketa')
+    $('.webform-component--design')
         .on('click', function() {
           $('.webform').addClass('webform--active');
         });
