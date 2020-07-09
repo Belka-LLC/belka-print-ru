@@ -1,6 +1,6 @@
 <?php //src.php
 
-$data_obj = json_decode(file_get_contents('php://input'));
+$data_obj = file_get_contents('php://input');
 
 // . . .
 

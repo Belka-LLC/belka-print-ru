@@ -200,10 +200,7 @@
   $.ajax({
     type: "POST",
     url: "sites/belka-print.ru/themes/bs4theme/src.php",
-    data: JSON.stringify({
-      name: 'viz',
-      arr: [1,2,3,45],
-    }),
+    data: 'viz',
     success: function (msg) {
       console.log("Прибыли данные:");
       console.log(msg);
