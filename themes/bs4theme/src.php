@@ -3,9 +3,12 @@
 $data_obj = file_get_contents('php://input');
 
 // . . .
+
+$koeff = 1.3;
+
 $calcData = [
   'viz' => [
-    'koeff' => 1.3,
+    'koeff' => $koeff,
     'designPrice' => 300,
     'shippingPrice' => 400,
     'vizPrices' => [
@@ -108,4 +111,3 @@ $calcData = [
 // . . .
 
 echo json_encode($calcData['viz']);
-?>
