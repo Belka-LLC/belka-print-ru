@@ -196,22 +196,26 @@
   /**
    * Calculator
    */
-
   let koeff, designPrice, shippingPrice, vizPrices, cartonPrices;
 
-  $.ajax({
-    type: "POST",
-    url: "sites/belka-print.ru/themes/bs4theme/src.php",
-    data: 'viz',
-    success: function (data) {
-      parseData(JSON.parse(data));
-      fillPrices();
-      calcPrice();
-    },
-    error: function () {
-      console.log("Error!!");
-    },
-  });
+  if ($('body').hasClass('page-node-74')) {
+
+    $.ajax({
+      type: "POST",
+      url: "sites/belka-print.ru/themes/bs4theme/src.php",
+      data: 'viz',
+      success: function (data) {
+        parseData(JSON.parse(data));
+        fillPrices();
+        calcPrice();
+      },
+      error: function () {
+        console.log("Error!!");
+      },
+    });
+
+    $('#webform-client-form-74').on('change', 'input, select', calcPrice);
+  }
 
   function parseData(data) {
     koeff = data.koeff;
@@ -221,13 +225,7 @@
     cartonPrices = data.cartonPrices;
   }
 
-
-  $('#edit-submitted-parameters-carton').on('change', function () {
-
-  });
-  $('#webform-client-form-74').on('change', 'input, select', calcPrice);
-
-  function fillPrices(sides) {
+  function fillPrices() {
     $('#edit-submitted-parameters-amount')
       .empty()
       .append(function () {
@@ -266,6 +264,10 @@
 
     $('#edit-submitted-parameters-amount .description').text();
     print = vizPrices[sides][metod][amount];
+    console.log('sides = ',sides);
+    console.log('metod = ',metod);
+    console.log('amount = ',amount);
+    console.log('print = ',print);
 
     if (metod == 'digital') {
       print += cartonPrices[carton][amount] - cartonPrices['cristalBoard'][amount];
