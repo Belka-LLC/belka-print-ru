@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#fd7e14">
   <?php print $head; ?>
   <link rel="preload" as="font" type="font/woff" crossorigin href="<?php print path_to_theme(); ?>/fonts/didact-gothic-cyr-regular.woff2">
-  <link rel="preload" as="font" type="font/woff" crossorigin href="<?php print path_to_theme(); ?>/fonts/didact-gothic-cyr-regular.woff2">
+  <link rel="preload" as="font" type="font/woff" crossorigin href="<?php print path_to_theme(); ?>/fonts/didact-gothic-cyr-bold.woff2">
   <?php print $styles; ?>
 </head>
 
