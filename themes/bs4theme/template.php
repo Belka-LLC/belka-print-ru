@@ -277,7 +277,8 @@ function bs4theme_menu_local_action($variables)
     $output .= l($link['title'], $link['href'], isset($link['localized_options']) ? $link['localized_options'] : array('attributes' => array('class' => 'nav-link')));
   } elseif (!empty($link['localized_options']['html'])) {
     $output .= $link['title'];
-  } else {
+  }
+  else {
     $output .= check_plain($link['title']);
   }
   $output .= "</li>\n";
@@ -305,7 +306,7 @@ function bs4theme_form_alter(&$form, &$form_state, $form_id)
       $form['actions']['submit']['#value'] = 'Отправить заказ в типографию';
       $form['actions']['total'] = array(
         '#markup' => '<p class="total__summary">Визитки односторонние (макет заказчика), картон гладкий, тираж 100 шт.</p>'
-        . '<p class="total__sum">ИТОГО <output class="total__price" name="total">300</output> руб.</p>'
+          . '<p class="total__sum">ИТОГО <output class="total__price" name="total">300</output> руб.</p>'
       );
       break;
   }
@@ -738,7 +739,8 @@ function bs4theme_textarea($variables)
 /**
  * Theme function to render a number component.
  */
-function bs4theme_webform_number($variables) {
+function bs4theme_webform_number($variables)
+{
   $element = $variables['element'];
 
   // This IF statement is mostly in place to allow our tests to set type="text"
@@ -762,8 +764,7 @@ function bs4theme_webform_number($variables) {
   // value to allow any decimal.
   if (empty($element['#integer']) && empty($element['#step'])) {
     $element['#step'] = 'any';
-  }
-  elseif ($element['#integer'] && empty($element['#step'])) {
+  } elseif ($element['#integer'] && empty($element['#step'])) {
     $element['#step'] = 1;
   }
 
