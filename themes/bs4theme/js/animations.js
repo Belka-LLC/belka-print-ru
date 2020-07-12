@@ -147,51 +147,52 @@
 
 
   /** Подсветка столбца таблицы */
-  $('tbody td, thead th:not([colspan])').hover(
-    (e) => {
-      const $cell = $(e.currentTarget);
-      const rowHeadCells = $cell.parents('table').children('tbody').children().first().children('th').size();
+  $('tbody td, thead th:not([colspan])').hover(function () {
+    const $cell = $(this);
+    if ($cell.parents('table').hasClass('table--poor')) return;
 
-      const theadShifts = getShifts('thead');
-      const tbodyShifts = getShifts('tbody');
+    const rowHeadCells = $cell.parents('table').children('tbody').children().first().children('th').size();
 
-      const tbodyCellIndexes = tbodyShifts.map(mapShifts);
-      const theadCellIndexes = theadShifts.map(mapShifts);
+    const theadShifts = getShifts('thead');
+    const tbodyShifts = getShifts('tbody');
 
-      tbodyCellIndexes.forEach(function (col, row) {
-        if (col > (rowHeadCells - 1 - tbodyShifts[row])) {
-          $($($cell.parents('table').children('tbody').children()[row]).children()[col]).toggleClass('highlighted');
-        }
-      });
-      theadCellIndexes.forEach(function (col, row) {
-        if (col > (rowHeadCells - 1 - theadShifts[row])) {
-          $($($cell.parents('table').children('thead').children()[row]).children('th:not([colspan])')[col]).toggleClass('highlighted');
-        }
-      });
-      function getShifts(tag) {
-        const arr = new Array($cell.parents('table').children(tag).children().size()).fill(0);
-        $cell.parents('table').children(tag).children().each((rowIndx, element) => {
-          $(element).children().each((cellIndx, element) => {
-            const rowspan = parseInt($(element).attr('rowspan'));
-            if (rowspan) {
-              for (let index = rowIndx + 1; index < rowIndx + rowspan; index++) {
-                arr[index] = (arr[index]) ? arr[index] += 1 : arr[index] = 1;
-              }
-            }
-          });
-        });
-        return arr;
-      }
-      function mapShifts(shift) {
-        let index = $cell.index() - shift;
-        if ($cell.parents('thead').size() > 0) {
-          index += theadShifts[$cell.parent().index()];
-        } else {
-          index += tbodyShifts[$cell.parent().index()];
-        }
-        return index;
+    const tbodyCellIndexes = tbodyShifts.map(mapShifts);
+    const theadCellIndexes = theadShifts.map(mapShifts);
+
+    tbodyCellIndexes.forEach(function (col, row) {
+      if (col > (rowHeadCells - 1 - tbodyShifts[row])) {
+        $($($cell.parents('table').children('tbody').children()[row]).children()[col]).toggleClass('highlighted');
       }
     });
+    theadCellIndexes.forEach(function (col, row) {
+      if (col > (rowHeadCells - 1 - theadShifts[row])) {
+        $($($cell.parents('table').children('thead').children()[row]).children('th:not([colspan])')[col]).toggleClass('highlighted');
+      }
+    });
+    function getShifts(tag) {
+      const arr = new Array($cell.parents('table').children(tag).children().size()).fill(0);
+      $cell.parents('table').children(tag).children().each((rowIndx, element) => {
+        $(element).children().each((cellIndx, element) => {
+          const rowspan = parseInt($(element).attr('rowspan'));
+          if (rowspan) {
+            for (let index = rowIndx + 1; index < rowIndx + rowspan; index++) {
+              arr[index] = (arr[index]) ? arr[index] += 1 : arr[index] = 1;
+            }
+          }
+        });
+      });
+      return arr;
+    }
+    function mapShifts(shift) {
+      let index = $cell.index() - shift;
+      if ($cell.parents('thead').size() > 0) {
+        index += theadShifts[$cell.parent().index()];
+      } else {
+        index += tbodyShifts[$cell.parent().index()];
+      }
+      return index;
+    }
+  });
 
   /**
    * Calculator
