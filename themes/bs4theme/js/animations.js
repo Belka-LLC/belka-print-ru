@@ -264,10 +264,6 @@
 
     $('#edit-submitted-parameters-amount .description').text();
     print = vizPrices[sides][metod][amount];
-    console.log('sides = ',sides);
-    console.log('metod = ',metod);
-    console.log('amount = ',amount);
-    console.log('print = ',print);
 
     if (metod == 'digital') {
       print += cartonPrices[carton][amount] - cartonPrices['cristalBoard'][amount];
