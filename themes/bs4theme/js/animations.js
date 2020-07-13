@@ -149,9 +149,9 @@
   /** Подсветка столбца таблицы */
   $('tbody td, thead th:not([colspan])').hover(function () {
     const $cell = $(this);
-    if ($cell.parents('table').hasClass('table--poor')) return;
+    if ($cell.closest('table').hasClass('table--poor')) return;
 
-    const rowHeadCells = $cell.parents('table').children('tbody').children().first().children('th').size();
+    const rowHeadCells = $cell.closest('table').children('tbody').children().first().children('th').size();
 
     const theadShifts = getShifts('thead');
     const tbodyShifts = getShifts('tbody');
@@ -161,31 +161,34 @@
 
     tbodyCellIndexes.forEach(function (col, row) {
       if (col > (rowHeadCells - 1 - tbodyShifts[row])) {
-        $($($cell.parents('table').children('tbody').children()[row]).children()[col]).toggleClass('highlighted');
+        $($($cell.closest('table').children('tbody').children()[row]).children()[col]).toggleClass('highlighted');
       }
     });
     theadCellIndexes.forEach(function (col, row) {
       if (col > (rowHeadCells - 1 - theadShifts[row])) {
-        $($($cell.parents('table').children('thead').children()[row]).children('th:not([colspan])')[col]).toggleClass('highlighted');
+        $($($cell.closest('table').children('thead').children()[row]).children('th:not([colspan])')[col]).toggleClass('highlighted');
       }
     });
     function getShifts(tag) {
-      const arr = new Array($cell.parents('table').children(tag).children().size()).fill(0);
-      $cell.parents('table').children(tag).children().each((rowIndx, element) => {
+      const $rows = $cell.closest('table').children(tag).children();
+      const arr = new Array($rows.size()).fill(0);
+      $rows.each((rowIndx, element) => {
         $(element).children().each((cellIndx, element) => {
           const rowspan = parseInt($(element).attr('rowspan'));
-          if (rowspan) {
-            for (let index = rowIndx + 1; index < rowIndx + rowspan; index++) {
-              arr[index] = (arr[index]) ? arr[index] += 1 : arr[index] = 1;
+          const colspan = parseInt($(element).attr('colspan'));
+          if (rowspan) for (let i = rowIndx + 1; i < rowIndx + rowspan; i++) { // для rowspan строк ниже текущей
+              arr[i]++;
             }
-          }
+          if (colspan) for (let i = rowIndx; i < rowIndx + rowspan; i++) { // для текущей и rowspan строк ниже текущей
+              arr[i] += colspan - 1;
+            }
         });
       });
       return arr;
     }
     function mapShifts(shift) {
       let index = $cell.index() - shift;
-      if ($cell.parents('thead').size() > 0) {
+      if ($cell.closest('thead').size() > 0) {
         index += theadShifts[$cell.parent().index()];
       } else {
         index += tbodyShifts[$cell.parent().index()];
