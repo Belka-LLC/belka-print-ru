@@ -176,12 +176,12 @@
         $(element).children().each((cellIndx, element) => {
           const rowspan = parseInt($(element).attr('rowspan'));
           const colspan = parseInt($(element).attr('colspan'));
-          if (rowspan) for (let i = rowIndx + 1; i < rowIndx + rowspan; i++) { // для rowspan строк ниже текущей
-              arr[i]++;
-            }
-          if (colspan) for (let i = rowIndx; i < rowIndx + rowspan; i++) { // для текущей и rowspan строк ниже текущей
-              arr[i] += colspan - 1;
-            }
+          if (rowspan > 1) for (let i = rowIndx + 1; i < rowIndx + rowspan; i++) { // для rowspan строк ниже текущей
+            arr[i]++;
+          }
+          if (colspan > 1) for (let i = rowIndx + 1; i < rowIndx + rowspan; i++) { // для rowspan строк ниже текущей
+            arr[i] += colspan - 1;
+          }
         });
       });
       return arr;
