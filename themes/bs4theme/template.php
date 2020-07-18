@@ -164,6 +164,30 @@ function bs4theme_field__body($variables)
   }
   return $output;
 }
+
+/** body__file_product */
+function bs4theme_field__body__file_product($variables)
+{
+  $output = '';
+
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= '<div class="offer__desc">' . drupal_render($item) . '</div>';
+  }
+  return $output;
+}
+
+/** field_price_label */
+function bs4theme_field__field_price_label($variables)
+{
+  $output = '';
+
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= drupal_render($item);
+  }
+  $output = '<p>' . $output . '</p>';
+  return $output;
+}
+
 /*--------- field_paragraphs -------------------------------------------------*/
 function bs4theme_field__field_paragraphs($variables)
 {
@@ -817,5 +841,47 @@ function bs4theme_status_messages($variables)
   </div>';
     }
   }
+  return $output;
+}
+
+
+/**
+ * Formats a product's price.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - element: An associative array render element containing:
+ *     - #value: Price to be formatted.
+ *     - #attributes: (optional) Array of attributes to apply to enclosing DIV.
+ *     - #title: (optional) Title to be used as label.
+ *
+ * @ingroup themeable
+ */
+function bs4theme_uc_product_price($variables) {
+  $element = $variables['element'];
+  $price = $element['#value'];
+  $attributes = isset($element['#attributes']) ? $element['#attributes'] : array();
+  $label = isset($element['#title']) ? $element['#title'] : '';
+
+
+  $attributes['class'] = array('offer__ribbon');
+
+  $output = '<p ' . drupal_attributes($attributes) . '>';
+
+  if ($label) {
+    $output .= '<span class="offer__price-label">' . $label . '</span> ';
+  }
+
+  $vars = array('price' => $price);
+
+  if (!empty($element['#suffixes'])) {
+    $vars['suffixes'] = $element['#suffixes'];
+  }
+
+  $output .= theme('uc_price', $vars);
+
+  $output .= drupal_render_children($element);
+  $output .= '</p>';
+
   return $output;
 }
