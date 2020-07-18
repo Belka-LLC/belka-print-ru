@@ -32,7 +32,7 @@
     <?php print $title; ?>
   <?php endif; ?>
   <?php if ($header): ?>
-    <div  class="catalog__header">
+    <div  class="catalog__header content content__wrap">
       <?php print $header; ?>
     </div>
   <?php endif; ?>

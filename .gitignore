@@ -1,4 +1,5 @@
 _dev/
+*.json
 modules/
 files/css/
 files/js/
