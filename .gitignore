@@ -7,6 +7,8 @@ files/styles/
 files/xmlsitemap/
 files/restricted/
 files/images
+files/minifyjs
 
 settings.php
 
+error_log
