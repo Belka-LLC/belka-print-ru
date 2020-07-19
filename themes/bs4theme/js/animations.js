@@ -319,5 +319,4 @@
   $('.webform-component--kontaktnye-dannye--tel input').mask('(999) 999 99 99');
 
 
-
 })(jQuery);
