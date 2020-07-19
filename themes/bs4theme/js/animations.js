@@ -67,7 +67,6 @@
         $folder.addClass('folder--opened');
       }
       function folding($folder) {
-        console.log('folding');
         $folder.children('.folder__wrap').removeClass('folder__wrap--show');
         $folder.children('.folder__wrap').height(0);
         $folder.children('.folder__toggle').blur();
