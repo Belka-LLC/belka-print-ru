@@ -258,7 +258,7 @@
     const metod = $('#edit-submitted-parameters-amount').val();
     const amount = $('#edit-submitted-parameters-amount option:selected').text();
     const carton = $('#edit-submitted-parameters-carton').val();
-    const carton_name = $('#edit-submitted-parameters-carton option:selected').text().toLowerCase();
+    const carton_name = $('#edit-submitted-parameters-carton option:selected').text();
     const sides = $('#edit-submitted-parameters-sides :radio:checked').val();
     const rounded = $('#edit-submitted-parameters-rounded :checkbox').prop("checked");
     const shipping = $('#edit-submitted-order-get-option :radio:checked').val();
@@ -283,7 +283,7 @@
     let summaryText = (sides == 1) ? 'Визитки односторонние' : 'Визитки двусторонние';
     summaryText += (design == 'design') ? ', верстка макета' : ', макет заказчика';
     summaryText += (metod == 'digital') ? ', цифровая печать' : ', офсетная печать';
-    summaryText += `, ${carton_name}`;
+    summaryText += ', ' + carton_name.toLowerCase();
     summaryText += (rounded) ? ', скругление' : '';
     summaryText += (shipping == 'shipping') ? ', доставка' : ', самовывоз';
     summaryText += '. <br>Тираж ' + amount + ' шт.';
