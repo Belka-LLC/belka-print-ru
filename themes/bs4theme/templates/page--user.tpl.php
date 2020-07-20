@@ -45,26 +45,7 @@ if (arg(0) == "node") {
 
 <main class="page__main">
   <header>
-    <?php if (isset($banner)) : ?>
-      <?php if ($banner) : ?>
-        <div class="page__banner banner" <?php if ($banner) print('style = "background-image: url(' . $banner . ')"'); ?>>
-          <div class="banner__wrap">
-            <?php if ($title_image) : ?>
-              <div class="banner__title-image" <?php print('style = "background-image: url(' . $title_image . ')"'); ?>>
-              </div>
-            <?php endif; ?>
-            <h1 class="banner__title"><?php print $title ?></h1>
-            <?php if ($slogan) : ?>
-              <div class="banner__slogan"><?php print $slogan ?></div>
-            <?php endif; ?>
-          </div>
-        </div>
-      <?php else : ?>
-        <h1 class="page__title"><?php print $title ?></h1>
-      <?php endif; ?>
-    <?php else : ?>
-      <h1 class="page__title"><?php print $title ?></h1>
-    <?php endif; ?>
+    <h1 class="page__title"><?php print $title ?></h1>
   </header>
 
   <?php print $messages; ?>
@@ -88,7 +69,9 @@ if (arg(0) == "node") {
   <?php endif; ?>
 
   <div class="page__content content">
-    <?php print render($page['content']); ?>
+    <div class="content__wrap">
+      <?php print render($page['content']); ?>
+    </div>
   </div>
 </main>
 
