@@ -857,7 +857,8 @@ function bs4theme_status_messages($variables)
  *
  * @ingroup themeable
  */
-function bs4theme_uc_product_price($variables) {
+function bs4theme_uc_product_price($variables)
+{
   $element = $variables['element'];
   $price = $element['#value'];
   $attributes = isset($element['#attributes']) ? $element['#attributes'] : array();
@@ -885,3 +886,4 @@ function bs4theme_uc_product_price($variables) {
 
   return $output;
 }
+
