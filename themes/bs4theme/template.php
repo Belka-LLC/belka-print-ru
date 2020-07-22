@@ -222,9 +222,23 @@ function bs4theme_field__field_3col_images($variables)
     $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label'] . ':&nbsp;</div>';
   }
   foreach ($variables['items'] as $delta => $item) {
-    $output .= '<div class="col px-2">' . drupal_render($item) . '</div>';
+    $output .= drupal_render($item);
   }
-  $output = '<div class="row  row-cols-1 row-cols-sm-2 row-cols-md-3 ' . $variables['classes'] . '"' . $variables['attributes'] . '>' . $output . '</div>';
+  $output = '<div class="figures">' . $output . '</div>';
+  return $output;
+}
+
+/*---------- field_image ----------------------*/
+function bs4theme_field__field_figures($variables)
+{
+  $output = '';
+  if (!$variables['label_hidden']) {
+    $output .= '<div class="field-label"' . $variables['title_attributes'] . '>' . $variables['label'] . ':&nbsp;</div>';
+  }
+  foreach ($variables['items'] as $delta => $item) {
+    $output .= drupal_render($item);
+  }
+  $output = '<div class="figures">' . $output . '</div>';
   return $output;
 }
 
