@@ -102,6 +102,20 @@ function bs4theme_menu_link__main_menu(array $variables)
 /*
 * Темизация полей
 */
+/**--------- preprocess--------------- */
+function bs4theme_preprocess_field(&$variables)
+{
+  if ($variables['element']['#field_name'] == 'field_figures') {
+    drupal_set_message($variables['field_name_css']);
+    if (isset($variables['element']['#object']->field_figures_class['und'])) {
+      drupal_set_message('<pre>' . print_r($variables['element']['#object']->field_figures_class['und'][0]['value'], TRUE) . '</pre>');
+      $variables['field_name_css'] = ' figures--' . $variables['element']['#object']->field_figures_class['und'][0]['value'];
+    } else {
+      $variables['field_name_css'] = '';
+    }
+    drupal_set_message('-------------------------------------------');
+  }
+}
 
 /*-------- по умолчанию ---------------*/
 function bs4theme_field($variables)
@@ -238,7 +252,7 @@ function bs4theme_field__field_figures($variables)
   foreach ($variables['items'] as $delta => $item) {
     $output .= drupal_render($item);
   }
-  $output = '<div class="figures">' . $output . '</div>';
+  $output = '<div class="figures' . $variables['field_name_css'] . '">' . $output . '</div>';
   return $output;
 }
 
@@ -900,4 +914,3 @@ function bs4theme_uc_product_price($variables)
 
   return $output;
 }
-
