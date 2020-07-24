@@ -109,7 +109,6 @@ function bs4theme_preprocess_field(&$variables)
 {
   if ($variables['element']['#field_name'] == 'field_figures') {
     if (isset($variables['element']['#object']->field_figures_class['und'])) {
-      drupal_set_message('<pre>' . print_r($variables['element']['#object']->field_figures_class['und'][0]['value'], TRUE) . '</pre>');
       $variables['field_name_css'] = ' figures--' . $variables['element']['#object']->field_figures_class['und'][0]['value'];
     } else {
       $variables['field_name_css'] = '';
