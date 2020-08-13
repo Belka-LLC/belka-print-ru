@@ -6,15 +6,17 @@
  * $banner - Фон транспоранта
  * $banner - Титульное изображение на транспаранте
  */
-if (arg(0) == "node") {
   $slogan = '';
   $banner = '';
   $title_image = '';
   $local_menu = '';
-  $local_menu = field_view_field('node', $node, 'field_local_menu');
-  if (!empty($node->field_slogan)) $slogan = $node->field_slogan['und'][0]['value'];
-  if (!empty($node->field_banner)) $banner = file_create_url($node->field_banner['und'][0]['uri']);
-  if (!empty($node->field_title_image)) $title_image = file_create_url($node->field_title_image['und'][0]['uri']);
+if (isset($node)) {
+    if (arg(0) == "node") {
+      $local_menu = field_view_field('node', $node, 'field_local_menu');
+      if (!empty($node->field_slogan)) $slogan = $node->field_slogan['und'][0]['value'];
+      if (!empty($node->field_banner)) $banner = file_create_url($node->field_banner['und'][0]['uri']);
+      if (!empty($node->field_title_image)) $title_image = file_create_url($node->field_title_image['und'][0]['uri']);
+    }
 }
 ?>
 
