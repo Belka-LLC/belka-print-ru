@@ -6,11 +6,11 @@
  * $banner - Фон транспоранта
  * $banner - Титульное изображение на транспаранте
  */
+
 $slogan = '';
 $banner = '';
 $title_image = '';
 $local_menu = '';
-
 if (isset($node)) {
   if (arg(0) == "node") {
     $local_menu = field_view_field('node', $node, 'field_local_menu');

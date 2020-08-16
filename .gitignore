@@ -8,7 +8,9 @@ files/styles/
 files/xmlsitemap/
 files/restricted/
 files/images
+files/minifyjs
 files/files
 
 settings.php
 
+error_log
