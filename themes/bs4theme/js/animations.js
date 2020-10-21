@@ -1,55 +1,17 @@
-/* eslint-disable max-len */
-/* eslint-disable require-jsdoc */
 'use strict';
 
 (function ($) {
   $(document).ready(function () {
-    // Проверка на тач-пад
-    $('body').on('touchstart', function (e) {
-      $('html').addClass('touch-device');
-    });
-
-    /* Показ системных сообщений в модальном окне */
-    $('.modal').modal('show');
-
-    /** Анимация при прокручивании окна */
-    $(window).on('scroll ready load', function () {
-      /* Положение суммы заказа */
-      const winHeight = $(window).height();
-      const scrollTop = $(document).scrollTop();
-      const posFooter = $('footer').offset();
-      if (posFooter.top < (winHeight + scrollTop)) {
-        $('.webform-body').css('padding-bottom', 0);
-        $('.summa').removeClass('fixed-bottom');
-      } else {
-        $('.webform-body').css('padding-bottom', $('.summa').outerHeight());
-        $('.summa').addClass('fixed-bottom');
-      };
-      /** Активизация main-menu__item */
-      const $navLinks = $('.main-menu__link');
-      $navLinks.each(function (indx, element) {
-        if ($(element).hasClass('active')) {
-          $(element).parent().addClass('active');
-        } else {
-          $(element).parent().removeClass('active');
-        }
-      });
-    });
 
     /* ------------------------------------
              Выпадающее меню
     --------------------------------------*/
     $('.folder').on('click mouseenter focus', function (event) {
-      // on touch-devices: touch is mouseenter+click
-      // console.log("---------------");
-      // console.log(event.type);
-      // console.log($(this).attr("class"));
 
       correctSideOffset($(this));
 
       // folding process
       if (!((event.type == 'mouseenter') && ($('html').hasClass('touch-device')))) {
-        // exclude (mouseenter on touch-devices)
 
         if ($(this).hasClass('folder--opened')) {
           // close folder
@@ -108,101 +70,62 @@
     });
 
 
-    /*
-    ** Плавная прокрутка по якорной ссылке
-    */
-    $('body').on('click', '.local-menu [href*="#"]', function (e) {
-      const fixedOffset = 50;
-      $('html,body').stop().animate({
-        scrollTop: $(this.hash).offset().top - fixedOffset,
-      }, 500);
-      e.preventDefault();
-    });
   });
-
 
   /**
-   * Webform
+   *  Calculator's Webform
    */
-  $('.webform-component--option')
-    .on('click', function () {
-      $('.webform').addClass('webform--active');
-    });
 
-  $(document).click(function () {
-    setTimeout(function () {
-      const winHeight = $(window).height();
-      const scrollTop = $(document).scrollTop();
-      const posFooter = $('footer').offset();
-      if (posFooter.top < (winHeight + scrollTop)) {
-        $('.webform-body').css('padding-bottom', 0);
-        $('.summa').removeClass('fixed-bottom');
-      } else {
-        $('.webform-body').css('padding-bottom', $('.summa').outerHeight());
-        $('.summa').addClass('fixed-bottom');
+  const calcOption = document.querySelector('.webform-component--option');
+  calcOption.addEventListener(
+    'click',
+    () => {
+      document.querySelector('.webform').classList.add('webform--active');
+      const fieldSets = document.querySelectorAll('.webform fieldset');
+      for (const fieldset of fieldSets) {
+        fieldset.classList.remove('disabled');
+        fieldset.disabled = false;
       }
-    }, 50);
-  });
+    },
+    { once: true }
+  );
 
+  const checkValidation = () => {
+    const submitButton = document.querySelector('.webform .form-actions .form-submit');
+    const validatedMaket = ((document.querySelector('.form-managed-file input[type=hidden]').value > 0) ||
+      (document.querySelector('#edit-submitted-design-information-text').textLength > 0) ||
+      (document.querySelector('#edit-submitted-design-src-link').value.length > 0));
+    const validatedEmail = (document.querySelector('#edit-submitted-customer-mail').validity.valid);
+    const validatedConsent = (document.querySelector('#edit-submitted-customer-consent-1').validity.valid);
 
-  /** Подсветка столбца таблицы */
-  $('tbody td, thead th:not([colspan])').hover(function () {
-    const $cell = $(this);
-    if ($cell.closest('table').hasClass('table--poor')) return;
+    submitButton.disabled = !(validatedMaket && validatedEmail && validatedConsent);
+    let validWarningHTML = `<span class="total__warning--${validatedMaket}">макет</span>`;
+    validWarningHTML += `, <span class="total__warning--${validatedEmail}">e-mail</span>`;
+    validWarningHTML += `, <span class="total__warning--${validatedConsent}">согласие</span>`;
+    const validWarning = document.createElement('p');
+    validWarning.innerHTML = validWarningHTML;
+    console.log(validWarning);
+    const submitButtonWrapper = document.createElement('div');
+    submitButton.before(submitButtonWrapper);
+    submitButtonWrapper.append(validWarning);
+    submitButtonWrapper.append(submitButton);
 
-    const rowHeadCells = $cell.closest('table').children('tbody').children().first().children('th').size();
+  };
 
-    const theadShifts = getShifts('thead');
-    const tbodyShifts = getShifts('tbody');
+  checkValidation();
 
-    const tbodyCellIndexes = tbodyShifts.map(mapShifts);
-    const theadCellIndexes = theadShifts.map(mapShifts);
+  const calcForm = document.querySelector('.webform-client-form-74');
+  calcForm.addEventListener('keyup', checkValidation);
 
-    tbodyCellIndexes.forEach(function (col, row) {
-      if (col > (rowHeadCells - 1 - tbodyShifts[row])) {
-        $($($cell.closest('table').children('tbody').children()[row]).children()[col]).toggleClass('highlighted');
-      }
-    });
-    theadCellIndexes.forEach(function (col, row) {
-      if (col > (rowHeadCells - 1 - theadShifts[row])) {
-        $($($cell.closest('table').children('thead').children()[row]).children('th:not([colspan])')[col]).toggleClass('highlighted');
-      }
-    });
-    function getShifts(tag) {
-      const $rows = $cell.closest('table').children(tag).children();
-      const arr = new Array($rows.size()).fill(0);
-      $rows.each((rowIndx, element) => {
-        $(element).children().each((cellIndx, element) => {
-          const rowspan = parseInt($(element).attr('rowspan'));
-          const colspan = parseInt($(element).attr('colspan'));
-          if (rowspan > 1) for (let i = rowIndx + 1; i < rowIndx + rowspan; i++) { // для rowspan строк ниже текущей
-            arr[i]++;
-          }
-          if (colspan > 1) for (let i = rowIndx + 1; i < rowIndx + rowspan; i++) { // для rowspan строк ниже текущей
-            arr[i] += colspan - 1;
-          }
-        });
-      });
-      return arr;
-    }
-    function mapShifts(shift) {
-      let index = $cell.index() - shift;
-      if ($cell.closest('thead').size() > 0) {
-        index += theadShifts[$cell.parent().index()];
-      } else {
-        index += tbodyShifts[$cell.parent().index()];
-      }
-      return index;
-    }
-  });
+  const observer = new MutationObserver(checkValidation);
+  observer.observe(calcForm.querySelector('.webform-component--design--src'), { childList: true, subtree: true });
 
   /**
    * Calculator
    */
-  let koeff, designPrice, shippingPrice, vizPrices, cartonPrices;
+  let designPrice, shippingPrice, vizPrices, cartonPrices;
 
   if ($('body').hasClass('page-node-74')) {
-
     $.ajax({
       type: "POST",
       url: "sites/belka-print.ru/themes/bs4theme/src.php",
@@ -221,7 +144,6 @@
   }
 
   function parseData(data) {
-    koeff = data.koeff;
     designPrice = data.designPrice;
     shippingPrice = data.shippingPrice;
     vizPrices = data.vizPrices;
@@ -234,11 +156,11 @@
       .append(function () {
         let html = '<optgroup label="Цифровая печать">';
         for (let tiraz in vizPrices[1]['digital']) {
-          html += '<option value="digital">' + tiraz + '</option>'
+          html += '<option value="' + tiraz + '" data-metod="digital">' + tiraz + '</option>'
         }
         html += '<optgroup label="Офсетная печать">';
         for (let tiraz in vizPrices[1]['offset']) {
-          html += '<option value="offset">' + tiraz + '</option>'
+          html += '<option value="' + tiraz + '" data-metod="offset">' + tiraz + '</option>'
         }
         return html;
       });
@@ -246,8 +168,10 @@
       .empty()
       .append(function () {
         let html = '';
+        let key = 1;
         for (let carton in cartonPrices) {
-          html += '<option value="' + carton + '">' + cartonPrices[carton]['name'] + '</option>'
+          html += '<option value="' + key + '" data-carton="' + carton + '">' + cartonPrices[carton]['name'] + '</option>';
+          key++;
         }
         return html;
       });
@@ -255,9 +179,9 @@
 
   function calcPrice() {
     const design = $('#edit-submitted-option :radio:checked').val();
-    const metod = $('#edit-submitted-parameters-amount').val();
+    const metod = $('#edit-submitted-parameters-amount option:selected').data('metod');
     const amount = $('#edit-submitted-parameters-amount option:selected').text();
-    const carton = $('#edit-submitted-parameters-carton').val();
+    const carton = $('#edit-submitted-parameters-carton option:selected').data('carton');
     const carton_name = $('#edit-submitted-parameters-carton option:selected').text();
     const sides = $('#edit-submitted-parameters-sides :radio:checked').val();
     const rounded = $('#edit-submitted-parameters-rounded :checkbox').prop("checked");
@@ -267,56 +191,40 @@
     description.text('* офсетная печать одного макета');
 
     $('#edit-submitted-parameters-amount .description').text();
-    print = vizPrices[sides][metod][amount];
+    let printCost = vizPrices[sides][metod][amount];
 
     if (metod == 'digital') {
-      print += cartonPrices[carton][amount] - cartonPrices['cristalBoard'][amount];
-      if (rounded) print += +amount;
+      printCost += cartonPrices[carton][amount] - cartonPrices['cristalBoard'][amount];
+      if (rounded) printCost += +amount;
       description.text('* цифровая печать' + ((+amount > 100) ? (' до ' + Math.round(amount / 100) + ' разных макетов') : ''));
     }
 
-    if (design == 'design') print += designPrice;
-    if (shipping == 'shipping') print += shippingPrice;
+    if (design == 'design') printCost += designPrice;
+    if (shipping == 'shipping') printCost += shippingPrice;
 
 
-    $('.total__price').text(print);
+    $('.total__price').text(printCost);
+    $('#edit-submitted-summa').val(printCost);
     let summaryText = (sides == 1) ? 'Визитки односторонние' : 'Визитки двусторонние';
     summaryText += (design == 'design') ? ', верстка макета' : ', макет заказчика';
     summaryText += (metod == 'digital') ? ', цифровая печать' : ', офсетная печать';
     summaryText += ', ' + carton_name.toLowerCase();
     summaryText += (rounded) ? ', скругление' : '';
     summaryText += (shipping == 'shipping') ? ', доставка' : ', самовывоз';
-    summaryText += '. <br>Тираж ' + amount + ' шт.';
+    summaryText += `. <br>Тираж ${amount} шт.`;
     $('.total__summary').html(summaryText);
   }
 
   /**
-  * Загрузка файла
+  * Загрузка файла сразу после выбора
   */
-  $('.webform input[type=file]').change(function () {
-    const filename = $(this).val().replace(/.*\\/, '');
-    if (filename) {
-      $(this).parent().addClass('was-validated').children('label').text(filename);
-    } else {
-      $(this).parent().removeClass('was-validated').children('label').text('Выберите файл...');
-    }
-  });
-
-  (function ($) {
-    Drupal.behaviors.autoUploadWebform = {
-      attach: function (context, settings) {
-        $('.upload-button').css('display', 'none');
-        $('.custom-file').on('change', 'input[type="file"]', function () {
-          $(this).parent().next('input[type="submit"]').mousedown();
-        });
-      },
-    };
-  })(jQuery);
-
-  /**
-   * Masked Input for Tel
-   */
-  $('.webform-component--kontaktnye-dannye--tel input').mask('(999) 999 99 99');
-
+  Drupal.behaviors.autoUploadWebform = {
+    attach: (context) => {
+      $('.upload-button', context).css('display', 'none');
+      $('.custom-file', context).on('change', 'input[type=file]', (evt) => {
+        $(evt.target).parent().next('input[type="submit"]').mousedown();
+      });
+    },
+  };
 
 })(jQuery);
