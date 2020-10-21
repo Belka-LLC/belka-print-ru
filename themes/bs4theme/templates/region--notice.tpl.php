@@ -1,5 +1,5 @@
 <?php if ($content): ?>
-<div class="notice" style="display: none;">
+<div class="notice" hidden>
 <?php print $content; ?>
 </div>
 <?php endif; ?>
