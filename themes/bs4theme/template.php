@@ -499,10 +499,12 @@ function bs4theme_fieldset($variables)
 
   element_set_attributes($element, array('id'));
 
-  if (in_array('hidden-on-start', $element['#attributes']['class'])) {
-    $output = '<fieldset' . drupal_attributes($element['#attributes']) . ' style="display: none">';
+  if (in_array('hidden', $element['#attributes']['class'])) {
+    $output = '<fieldset ' . drupal_attributes($element['#attributes']) . ' style="display: none">';
+  } elseif (in_array('disabled', $element['#attributes']['class'])) {
+    $output = '<fieldset ' . drupal_attributes($element['#attributes']) . ' disabled>';
   } else {
-    $output = '<fieldset' . drupal_attributes($element['#attributes']) . '>';
+    $output = '<fieldset ' . drupal_attributes($element['#attributes']) . '>';
   }
 
   if (!empty($element['#title'])) {
@@ -680,7 +682,7 @@ function bs4theme_form_element_label($variables)
   }
 
   // The leading whitespace helps visually separate fields from inline labels.
-  return ' <label' . drupal_attributes($attributes) . '>' . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
+  return '<label' . drupal_attributes($attributes) . '>' . $t('!title !required', array('!title' => $title, '!required' => $required)) . "</label>\n";
 }
 /**
  * Theme function to render an email component.

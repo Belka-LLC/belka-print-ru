@@ -63,10 +63,14 @@ if (isset($node)) {
           </div>
         </div>
       <?php else : ?>
-        <h1 class="page__title"><?php print $title ?></h1>
+        <div class="page__title-wrap">
+          <h1 class="page__title"><?php print $title ?></h1>
+        </div>
       <?php endif; ?>
     <?php else : ?>
-      <h1 class="page__title"><?php print $title ?></h1>
+      <div class="page__title-wrap">
+        <h1 class="page__title"><?php print $title ?></h1>
+      </div>
     <?php endif; ?>
   </header>
 
