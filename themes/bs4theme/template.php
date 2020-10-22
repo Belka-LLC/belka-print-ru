@@ -353,8 +353,11 @@ function bs4theme_form_alter(&$form, &$form_state, $form_id)
     case 'webform_client_form_74':
       $form['#attributes']['autocomplete'] = 'off';
       $form['#attributes']['class'][0] = 'webform';
+      $form['actions']['#attributes']['class'][] = 'total';
       $form['actions']['submit']['#attributes']['class'] = [];
       $form['actions']['submit']['#value'] = 'Отправить заказ в типографию';
+      $form['actions']['submit']['#prefix'] = '<div class="total__warning-wrap"><p class="total__warning"><span class="total__warning--false">макет</span> <span class="total__warning--false">e-mail</span> <span class="total__warning--false">согласие</span></p>';
+      $form['actions']['submit']['#suffix'] = '</div>';
       $form['actions']['total'] = array(
         '#markup' => '<p class="total__summary">Визитки односторонние (макет заказчика), картон гладкий, тираж 100 шт.</p>'
           . '<p class="total__sum">ИТОГО <output class="total__price" name="total">300</output> руб.</p>'

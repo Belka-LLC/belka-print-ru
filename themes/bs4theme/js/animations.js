@@ -103,22 +103,30 @@
       const validatedConsent = (document.querySelector('#edit-submitted-customer-consent-1').validity.valid);
 
       submitButton.disabled = !(validatedMaket && validatedEmail && validatedConsent);
-      let validWarningHTML = `<span class="total__warning--${validatedMaket}">макет</span>`;
-      validWarningHTML += `, <span class="total__warning--${validatedEmail}">e-mail</span>`;
-      validWarningHTML += `, <span class="total__warning--${validatedConsent}">согласие</span>`;
-      const validWarning = document.createElement('p');
-      validWarning.innerHTML = validWarningHTML;
-      const submitButtonWrapper = document.createElement('div');
-      submitButton.before(submitButtonWrapper);
-      submitButtonWrapper.append(validWarning);
-      submitButtonWrapper.append(submitButton);
 
+      let validWarningHTML = `<span class="total__warning--${validatedMaket}">макет</span>`;
+      validWarningHTML += ` <span class="total__warning--${validatedEmail}">e-mail</span>`;
+      validWarningHTML += ` <span class="total__warning--${validatedConsent}">согласие</span>`;
+
+      const validWarning = document.querySelector('.total__warning') || document.createElement('p');
+      validWarning.className = 'total__warning';
+      validWarning.innerHTML = validWarningHTML;
+
+      const totalWarningWrap = document.querySelector('.total__warning-wrap');
+      totalWarningWrap.prepend(validWarning);
+
+      if (submitButton.disabled) {
+        document.querySelector('.total__warning').classList.add('total__warning--invalid');
+      } else {
+        document.querySelector('.total__warning').classList.remove('total__warning--invalid');
+      }
     };
 
     checkValidation();
 
 
     calcForm.addEventListener('keyup', checkValidation);
+    calcForm.addEventListener('change', checkValidation);
 
     const observer = new MutationObserver(checkValidation);
     observer.observe(calcForm.querySelector('.webform-component--design--src'), { childList: true, subtree: true });
@@ -197,10 +205,20 @@
       let printCost = vizPrices[sides][metod][amount];
 
       if (metod == 'digital') {
+        const cartonSelector = document.querySelector('#edit-submitted-parameters-carton');
+        for (const option of cartonSelector.querySelectorAll('option')) {
+          option.disabled = false;
+        }
         printCost += cartonPrices[carton][amount] - cartonPrices['cristalBoard'][amount];
         if (rounded) printCost += +amount;
         description.text('* цифровая печать' + ((+amount > 100) ? (' до ' + Math.round(amount / 100) + ' разных макетов') : ''));
-      }
+      } else {
+        const cartonSelector = document.querySelector('#edit-submitted-parameters-carton');
+        cartonSelector.selectedIndex = 0;
+        for (const option of cartonSelector.querySelectorAll('option')) {
+          if (option.value > 1) option.disabled = true;
+        }
+      };
 
       if (design == 'design') printCost += designPrice;
       if (shipping == 'shipping') printCost += shippingPrice;
@@ -208,16 +226,18 @@
 
       $('.total__price').text(printCost);
       $('#edit-submitted-summa').val(printCost);
-      let summaryText = (sides == 1) ? 'Визитки односторонние' : 'Визитки двусторонние';
-      summaryText += (design == 'design') ? ', верстка макета' : ', макет заказчика';
-      summaryText += (metod == 'digital') ? ', цифровая печать' : ', офсетная печать';
-      summaryText += ', ' + carton_name.toLowerCase();
-      summaryText += (rounded) ? ', скругление' : '';
-      summaryText += (shipping == 'shipping') ? ', доставка' : ', самовывоз';
-      summaryText += `. <br>Тираж ${amount} шт.`;
+      let summaryText = '<ul>';
+      summaryText += (sides == 1) ? '<li>визитки односторонние</li>' : '<li>визитки двусторонние</li>';
+      // summaryText += (design == 'design') ? '<li>верстка макета</li>' : '<li>макет заказчика</li>';
+      summaryText += (metod == 'digital') ? '<li>цифровая печать</li>' : '<li>офсетная печать</li>';
+      summaryText += '<li>' + carton_name.toLowerCase() + '</li>';
+      summaryText += (rounded) ? '<li>скругление</li>' : '';
+      summaryText += (shipping == 'shipping') ? '<li>доставка</li>' : '<li>самовывоз</li>';
+      summaryText += `</ul>Тираж ${amount} шт.`;
       $('.total__summary').html(summaryText);
     }
   }
+
   /**
   * Загрузка файла сразу после выбора
   */
