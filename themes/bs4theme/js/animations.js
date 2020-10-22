@@ -96,7 +96,7 @@
 
     const checkValidation = () => {
       const submitButton = document.querySelector('.webform .form-actions .form-submit');
-      const validatedMaket = ((document.querySelector('.form-managed-file input[type=hidden]').value > 0) ||
+      const validatedMaket = ((document.querySelector('[name="submitted[design][src][file][fid]"]').value > 0) ||
         (document.querySelector('#edit-submitted-design-information-text').textLength > 0) ||
         (document.querySelector('#edit-submitted-design-src-link').value.length > 0));
       const validatedEmail = (document.querySelector('#edit-submitted-customer-mail').validity.valid);
