@@ -23,4 +23,4 @@ scripts[] = js/bootstrap/alert.js
 scripts[] = js/jquery.maskedinput.min.js
 ;scripts[] = js/belka.js
 scripts[] = js/bundle.js
-scripts[] = js/animations.js
+;scripts[] = js/animations.js
