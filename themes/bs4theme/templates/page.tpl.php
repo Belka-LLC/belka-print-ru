@@ -50,7 +50,7 @@ if (isset($node)) {
   <header>
     <?php if (isset($banner)) : ?>
       <?php if ($banner) : ?>
-        <div class="page__banner banner" <?php if ($banner) print('style = "background-image: url(' . $banner . ')"'); ?>>
+        <div class="page__banner banner banner--init" <?php if ($banner) print('style = "background-image: url(' . $banner . ')"'); ?>>
           <div class="banner__wrap">
             <?php if ($title_image) : ?>
               <div class="banner__title-image" <?php print('style = "background-image: url(' . $title_image . ')"'); ?>>

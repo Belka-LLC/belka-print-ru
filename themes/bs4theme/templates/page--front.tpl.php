@@ -25,11 +25,8 @@
     <?php endif; ?>
 </header>
 
-<main class="page__main">
     <?php print $messages; ?>
     <?php print render($page['content']); ?>
-
-</main>
 
 <?php if (!empty($page['footer'])) : ?>
     <?php print render($page['footer']); ?>
