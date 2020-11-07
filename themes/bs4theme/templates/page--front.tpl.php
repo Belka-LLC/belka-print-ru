@@ -1,11 +1,11 @@
+<?php print render($page['notice']); ?>
 <header class="page__header navbar-expand-md">
-    <?php print render($page['notice']); ?>
     <?php if ($title) : ?><h1 class="sr-only"><?php print $title; ?></h1><?php endif; ?>
     <nav class="main-nav">
 
         <?php if ($logo) : ?>
             <a class="main-nav__logo" title="<?php print t('Home'); ?>">
-                <img src="<?php print $logo; ?>" alt="<?php print t('Logo'); ?>" />
+                <img src="<?php print $logo; ?>" alt="<?php print t('Logo'); ?> " width="150" height="40"/>
             </a>
         <?php endif; ?>
 
