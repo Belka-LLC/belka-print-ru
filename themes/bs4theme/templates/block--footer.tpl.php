@@ -13,10 +13,10 @@ $contextual_links = user_access('administer nodes') ? ' contextual-links-region'
 <section class="footer__section<?php print $contextual_links ?>" <?php print $attributes; ?>>
 <?php print render($title_prefix); ?>
 <?php if ($block->subject) : ?>
-<h4 <?php print $title_attributes; ?>><?php print $block->subject ?></h4>
+<h2 class="footer__title"><?php print $block->subject ?></h2>
 <?php endif; ?>
 <?php if ($info) : ?>
-<h4 class="sr-only"><?php print $info->info ?></h4>
+<h2 class="sr-only"><?php print $info->info ?></h2>
 <?php endif; ?>
 <?php print render($title_suffix); ?>
 <?php print $content ?>
