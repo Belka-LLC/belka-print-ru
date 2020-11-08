@@ -4,10 +4,6 @@
  * The primary PHP file for bs4theme theme.
  */
 
-/*
-*
-*/
-
 /**
  * Implements hook_css_alter().
  */
