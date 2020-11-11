@@ -4,9 +4,9 @@
     <nav class="main-nav">
 
         <?php if ($logo) : ?>
-            <a class="main-nav__logo" title="<?php print t('Home'); ?>">
+            <span class="main-nav__logo">
                 <img src="<?php print $logo; ?>" alt="<?php print t('Logo'); ?> " width="150" height="40"/>
-            </a>
+        </span>
         <?php endif; ?>
 
         <?php if (!empty($page['main_contacts'])) : ?>
