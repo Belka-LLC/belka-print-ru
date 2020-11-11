@@ -10,9 +10,9 @@
 function bs4theme_css_alter(&$css)
 {
   // Отключаем системные стили кроме colorbox и стилей темы
-  // foreach ($css as $key => $value) {
-  //   if ((strpos($key,"colorbox") === false) && (strpos($key,"themes") === false)) unset($css[$key]);
-  // }
+  foreach ($css as $key => $value) {
+    if ((strpos($key,"colorbox") === false) && (strpos($key,"themes") === false)) unset($css[$key]);
+  }
 
   // Сортируем файлы функцией drupal_sort_css_js().
   uasort($css, 'drupal_sort_css_js');
