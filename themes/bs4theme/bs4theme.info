@@ -14,10 +14,5 @@ regions[help]           = 'Help'
 
 stylesheets[all][] = css/style.min.css
 
-scripts[] = js/bootstrap/util.js
-scripts[] = js/bootstrap/collapse.js
-scripts[] = js/bootstrap/dropdown.js
-scripts[] = js/bootstrap/modal.js
-scripts[] = js/bootstrap/scrollspy.js
-scripts[] = js/bootstrap/alert.js
+scripts[] = js/bootstrap/bootstrap.bundle.min.js
 scripts[] = js/bundle.js

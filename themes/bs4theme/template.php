@@ -10,8 +10,10 @@
 function bs4theme_css_alter(&$css)
 {
   // Отключаем системные стили кроме colorbox и стилей темы
-  foreach ($css as $key => $value) {
-    if ((strpos($key,"superfish") === false) && (strpos($key,"colorbox") === false) && (strpos($key,"themes") === false)) unset($css[$key]);
+  if (!path_is_admin(current_path()) && !user_is_logged_in()) {
+    foreach ($css as $key => $value) {
+      if ((strpos($key, "superfish") === false) && (strpos($key, "colorbox") === false) && (strpos($key, "themes") === false)) unset($css[$key]);
+    }
   }
 
   // Сортируем файлы функцией drupal_sort_css_js().
@@ -24,20 +26,59 @@ function bs4theme_css_alter(&$css)
     $css[$name]['every_page'] = FALSE;
   }
 }
+
 /**
  * Implements hook_js_alter().
  */
+function removejQuery(&$javascript) {
+  // Remove jQuery dependent scripts and recreate settings.
+  if (!path_is_admin(current_path()) && !user_is_logged_in() && empty($javascript['jquery'])) {
+   $javascript['custom_settings'] = array(
+     'type' => 'inline',
+     'scope' => 'head_scripts',
+     'weight' => -99.999,
+     'group' => 0,
+     'every_page' => TRUE,
+     'requires_jquery' => FALSE,
+     'cache' => TRUE,
+     'defer' => FALSE,
+     'preprocess' => TRUE,
+     'version' => NULL,
+     'data' => 'document.querySelector("html").classList.add("js"); var Drupal = {}; Drupal.settings = ' . json_encode(array_merge_recursive(...$javascript['settings']['data'])),
+   );
+   $remove_scripts = array(
+     // Jquery dependent JS to remove.
+     'misc/drupal.js',
+     'settings',
+     'misc/ajax.js',
+     'misc/progress.js',
+   );
+   // Remove it.
+   foreach (array_keys($javascript) as $value) {
+     if (in_array($value, $remove_scripts) || strpos($value, 'jquery')) {
+       unset($javascript[$value]);
+     }
+   }
+ } elseif (!empty($javascript['jquery'])) {
+   // Remove placeholder.
+   unset($javascript['jquery']);
+ }
+}
+
 function bs4theme_js_alter(&$javascript)
 {
-  // Сортируем файлы функцией drupal_sort_css_js().
   uasort($javascript, 'drupal_sort_css_js');
   $i = 0;
   foreach ($javascript as $name => $script) {
     $javascript[$name]['weight'] = $i++;
-    // Все файлы помещаем в группу JS_DEFAULT
     $javascript[$name]['group'] = JS_DEFAULT;
-    $javascript[$name]['every_page'] = FALSE;
+    $javascript[$name]['every_page'] = TRUE;
+    if (strpos($name, "bundle")) {
+      $javascript[$name]['preprocess'] = FALSE;
+    }
   }
+
+  // drupal_set_message('<pre>'.print_r($javascript, TRUE).'</pre>');
 }
 
 /* Удалить все атрибуты type='text/javascript' и type="text/css" */
@@ -324,8 +365,7 @@ function bs4theme_menu_local_action($variables)
     $output .= l($link['title'], $link['href'], isset($link['localized_options']) ? $link['localized_options'] : array('attributes' => array('class' => 'nav-link')));
   } elseif (!empty($link['localized_options']['html'])) {
     $output .= $link['title'];
-  }
-  else {
+  } else {
     $output .= check_plain($link['title']);
   }
   $output .= "</li>\n";
