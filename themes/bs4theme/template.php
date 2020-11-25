@@ -12,7 +12,7 @@ function bs4theme_css_alter(&$css)
   // Отключаем системные стили кроме colorbox и стилей темы
   if (!path_is_admin(current_path()) && !user_is_logged_in()) {
     foreach ($css as $key => $value) {
-      if ((strpos($key, "superfish") === false) && (strpos($key, "colorbox") === false) && (strpos($key, "themes") === false)) unset($css[$key]);
+      if ((strpos($key, "colorbox") === false) && (strpos($key, "themes") === false)) unset($css[$key]);
     }
   }
 
@@ -73,9 +73,9 @@ function bs4theme_js_alter(&$javascript)
     $javascript[$name]['weight'] = $i++;
     $javascript[$name]['group'] = JS_DEFAULT;
     $javascript[$name]['every_page'] = TRUE;
-    if (strpos($name, "bundle")) {
-      $javascript[$name]['preprocess'] = FALSE;
-    }
+    // if (strpos($name, "bundle")) {
+    //   $javascript[$name]['preprocess'] = FALSE;
+    // }
   }
 
   // drupal_set_message('<pre>'.print_r($javascript, TRUE).'</pre>');
