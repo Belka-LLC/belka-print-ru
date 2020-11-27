@@ -15,6 +15,8 @@
 <?php print $page_top; ?>
 <?php print $page; ?>
 <?php print $scripts; ?>
+<script type="module" src="<?php print path_to_theme(); ?>/js/bundle.js"></script>
+<script nomodule src="<?php print path_to_theme(); ?>/js/bundle.es5.js"></script>
 <?php print $page_bottom; ?>
 </body>
 

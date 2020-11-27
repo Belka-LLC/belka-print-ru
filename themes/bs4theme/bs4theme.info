@@ -13,6 +13,3 @@ regions[page_bottom]    = 'Page bottom'
 regions[help]           = 'Help'
 
 stylesheets[all][] = css/style.min.css
-
-scripts[] = js/bootstrap/bootstrap.bundle.min.js
-scripts[] = js/bundle.js
