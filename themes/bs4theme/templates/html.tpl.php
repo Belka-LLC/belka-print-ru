@@ -19,7 +19,7 @@ $theme_path = drupal_get_path('theme', 'bs4theme');
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $scripts; ?>
-  <script type="module" src="<?php print $theme_path; ?>js/bundle.js"></script>
+  <script type="module" src="<?php print $theme_path; ?>/js/bundle.js"></script>
   <script nomodule src="<?php print $theme_path; ?>/js/bundle.es5.js"></script>
   <?php print $page_bottom; ?>
 </body>
