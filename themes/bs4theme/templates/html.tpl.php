@@ -9,7 +9,6 @@ $theme_path = drupal_get_path('theme', 'bs4theme');
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#fd7e14">
   <?php print $head; ?>
-  <link rel="icon" href="https://example.com/favicon.ico" type="image/x-icon">
   <link rel="preload" as="font" type="font/woff" crossorigin href="<?php print $theme_path; ?>/fonts/didact-gothic-cyr-regular.woff2">
   <link rel="preload" as="font" type="font/woff" crossorigin href="<?php print $theme_path; ?>/fonts/didact-gothic-cyr-bold.woff2">
   <link rel="icon" href="<?php print $theme_path; ?>/img/favicon.svg" type="image/svg+xml">
@@ -20,7 +19,7 @@ $theme_path = drupal_get_path('theme', 'bs4theme');
   <?php print $page_top; ?>
   <?php print $page; ?>
   <?php print $scripts; ?>
-  <script type="module" src="<?php print $theme_path; ?>/js/bundle.js"></script>
+  <script type="module" src="<?php print $theme_path; ?>js/bundle.js"></script>
   <script nomodule src="<?php print $theme_path; ?>/js/bundle.es5.js"></script>
   <?php print $page_bottom; ?>
 </body>
