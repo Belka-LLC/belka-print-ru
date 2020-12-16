@@ -1,5 +1,6 @@
 <?php
-$theme_path = drupal_get_path('theme', 'bs4theme');
+  global $base_root, $theme_path;
+  $theme_path = $base_root . '/' .$theme_path;
 ?>
 <!DOCTYPE html>
 <html lang="ru-RU">
