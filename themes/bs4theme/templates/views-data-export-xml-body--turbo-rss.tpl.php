@@ -9,7 +9,7 @@
         <h1><?php print $row['title']; ?></h1>
       </header>
       <?php foreach ($row as $field => $content) : ?>
-<?php if (($field != 'path') && ($field != 'title')) print $content . "\n"; ?>
+<?php if (($field != 'path') && ($field != 'title')) print str_replace("data-src", "src", $content) . "\n"; ?>
       <?php endforeach; ?>
     ]]>
     </turbo:content>
