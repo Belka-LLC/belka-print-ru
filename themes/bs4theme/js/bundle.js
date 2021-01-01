@@ -7756,9 +7756,9 @@ const stickBannerWrap = () => {
 };
 
 if (banner) {
-  // correctBannerSize();
-  window.addEventListener(`resize`, correctBannerSize);
   window.addEventListener(`load`, correctBannerSize);
+  window.addEventListener(`resize`, correctBannerSize);
+  window.addEventListener(`load`, stickBannerWrap);
   window.addEventListener(`scroll`, stickBannerWrap);
 }
 
@@ -7775,6 +7775,8 @@ if (banner) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "jquery");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* eslint-disable require-jsdoc */
+
 /* eslint-disable no-invalid-this */
 
 const mainNavNavbar = document.querySelector(`.main-nav__navbar`);
@@ -7971,8 +7973,8 @@ for (const folder of document.querySelectorAll(`.folder`)) {
   addFolderListeners(folder);
 }
 
-sliceMainMenu();
 window.addEventListener(`resize`, sliceMainMenu);
+window.addEventListener(`load`, sliceMainMenu);
 
 if (banner || titleWrap) {
   window.addEventListener(`scroll`, stickMainMenu);
