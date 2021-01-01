@@ -7731,7 +7731,7 @@ const correctBannerSize = () => {
 
   let bannerTitleFontSize = getComputedStyle(bannerTitle).fontSize.slice(0, -2);
   let bannerSloganFontSize = getComputedStyle(bannerSlogan).fontSize.slice(0, -2);
-  let titleScale = bannerTitle.scrollWidth / bannerTitle.clientWidth;
+  const titleScale = bannerTitle.scrollWidth / bannerTitle.clientWidth;
   let sloganScale = bannerSlogan.scrollWidth / bannerSlogan.clientWidth;
 
   if (titleScale > sloganScale) {
@@ -7743,22 +7743,27 @@ const correctBannerSize = () => {
   bannerTitle.style.fontSize = bannerTitleFontSize + `px`;
   bannerSlogan.style.fontSize = bannerSloganFontSize + `px`;
   bannerWrap.style.opacity = 1;
+  stickBannerWrap();
 };
 
 const stickBannerWrap = () => {
+  console.log(`stickBannerWrap`);
+
   if (banner.offsetHeight - bannerWrap.offsetHeight > window.pageYOffset) {
     bannerWrap.style.position = `fixed`;
-    bannerWrap.style.top = ``;
+    bannerWrap.style.top = `auto`;
+    bannerWrap.style.bottom = ``;
   } else {
-    bannerWrap.style.position = `relative`;
-    bannerWrap.style.top = banner.offsetHeight - bannerWrap.offsetHeight + `px`;
+    bannerWrap.style.position = `absolute`;
+    bannerWrap.style.bottom = 0;
   }
+
+  console.dir(bannerWrap);
 };
 
 if (banner) {
   window.addEventListener(`load`, correctBannerSize);
   window.addEventListener(`resize`, correctBannerSize);
-  window.addEventListener(`load`, stickBannerWrap);
   window.addEventListener(`scroll`, stickBannerWrap);
 }
 
