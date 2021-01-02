@@ -7713,58 +7713,68 @@ module.exports = function (originalModule) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-const banner = document.querySelector(`.banner`);
-const bannerWrap = document.querySelector(`.banner__wrap`);
-const bannerTitle = document.querySelector(`.banner__title`);
-const bannerSlogan = document.querySelector(`.banner__slogan`);
-const vh = document.documentElement.clientHeight;
-
-const correctBannerHeight = () => {
-  const localMenu = document.querySelector(`.page__local-menu`);
-  const pageHeader = document.querySelector(`.page__header`);
-
-  if (localMenu) {
-    banner.style.minHeight = 100 * (1 - (localMenu.offsetHeight + pageHeader.offsetHeight) / vh) + `vh`;
-  }
-};
-
-const correctBannerFontSizes = () => {
-  bannerTitle.style.fontSize = ``;
-  bannerSlogan.style.fontSize = ``;
-  const bannerTitleFontSize = getComputedStyle(bannerTitle).fontSize.slice(0, -2);
-  const bannerSloganFontSize = getComputedStyle(bannerSlogan).fontSize.slice(0, -2);
-  const titleScale = bannerTitle.scrollWidth / bannerTitle.clientWidth;
-  const sloganScale = bannerSlogan.scrollWidth / bannerSlogan.clientWidth;
-  const scale = titleScale > sloganScale ? titleScale : sloganScale;
-  bannerTitle.style.fontSize = bannerTitleFontSize / scale + `px`;
-  bannerSlogan.style.fontSize = bannerSloganFontSize / scale + `px`;
-};
-
-const stickBannerWrap = () => {
-  if (banner.offsetHeight - bannerWrap.offsetHeight > window.pageYOffset) {
-    bannerWrap.style.position = `fixed`;
-    bannerWrap.style.top = `auto`;
-    bannerWrap.style.bottom = ``;
-  } else {
-    bannerWrap.style.position = `absolute`;
-    bannerWrap.style.bottom = 0;
-  }
-};
-
-const correctBanner = () => {
-  correctBannerHeight();
-
-  if (document.documentElement.clientWidth < 576) {
-    correctBannerFontSizes();
+/* eslint-disable require-jsdoc */
+class Banner {
+  constructor(selector) {
+    this.banner = document.querySelector(selector);
+    this.wrap = this.banner.querySelector(`.banner__wrap`);
+    this.title = this.banner.querySelector(`.banner__title`);
+    this.slogan = this.banner.querySelector(`.banner__slogan`);
+    window.addEventListener(`load`, this.correct.bind(this));
+    window.addEventListener(`resize`, this.correct.bind(this));
+    window.addEventListener(`scroll`, this.stickWrap.bind(this));
   }
 
-  ;
-};
+  correctHeight() {
+    const vh = document.documentElement.clientHeight;
+    const localMenu = document.querySelector(`.page__local-menu`);
+    const pageHeader = document.querySelector(`.page__header`);
+    let minHeight = vh;
 
-if (banner) {
-  window.addEventListener(`load`, correctBanner);
-  window.addEventListener(`resize`, correctBanner);
-  window.addEventListener(`scroll`, stickBannerWrap);
+    if (localMenu) {
+      minHeight = vh - localMenu.offsetHeight - pageHeader.offsetHeight;
+    }
+
+    minHeight = Math.max(minHeight, this.wrap.offsetHeight + pageHeader.offsetHeight);
+    this.banner.style.minHeight = minHeight + `px`;
+  }
+
+  correctFontSizes() {
+    this.title.style.fontSize = ``;
+    this.slogan.style.fontSize = ``;
+    if (document.documentElement.clientWidth > 576) return;
+    const titleFontSize = getComputedStyle(this.title).fontSize.slice(0, -2);
+    const sloganFontSize = getComputedStyle(this.slogan).fontSize.slice(0, -2);
+    const clientWidth = document.documentElement.clientWidth;
+    const titleScale = this.title.scrollWidth / (clientWidth - 40);
+    const sloganScale = this.slogan.scrollWidth / (clientWidth - 40);
+    const scale = titleScale > sloganScale ? titleScale : sloganScale;
+    this.title.style.fontSize = titleFontSize / scale + `px`;
+    this.slogan.style.fontSize = sloganFontSize / scale + `px`;
+  }
+
+  stickWrap() {
+    if (this.banner.offsetHeight - this.wrap.offsetHeight > window.pageYOffset) {
+      this.wrap.style.position = `fixed`;
+      this.wrap.style.top = `auto`;
+      this.wrap.style.bottom = ``;
+    } else {
+      this.wrap.style.position = `absolute`;
+      this.wrap.style.bottom = 0;
+    }
+  }
+
+  correct() {
+    this.correctFontSizes();
+    this.correctHeight();
+    this.stickWrap();
+  }
+
+}
+
+if (document.querySelector(`.banner`)) {
+  const bannerObj = new Banner(`.banner`);
+  console.dir(bannerObj);
 }
 
 /***/ }),
@@ -8316,6 +8326,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace_js__WEBPACK_IMPORTED_MODULE_0__);
 
 
+/* eslint-disable require-jsdoc */
 class TelMask {
   constructor(options) {
     this.el = options.el;
@@ -8335,21 +8346,27 @@ class TelMask {
   }
 
   mask(e) {
-    let _this = e.target;
-    let matrix = this.layout;
+    const _this = e.target;
+    const matrix = this.layout;
     let i = 0;
-    let def = matrix.replace(/\D/g, ``);
+    const def = matrix.replace(/\D/g, ``);
 
     let val = _this.value.replace(/\D/g, ``);
 
-    if (def.length >= val.length) val = def;
+    if (def.length >= val.length) {
+      val = def;
+    }
+
     _this.value = matrix.replace(/./g, function (a) {
       return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? `` : a;
     });
 
     if (e.type === `blur`) {
-      let regexp = new RegExp(this.maskreg);
-      if (!regexp.test(_this.value)) _this.value = ``;
+      const regexp = new RegExp(this.maskreg);
+
+      if (!regexp.test(_this.value)) {
+        _this.value = ``;
+      }
     } else {
       this.setCursorPosition(_this.value.length, _this);
     }
@@ -8357,8 +8374,11 @@ class TelMask {
 
   setCursorPosition(pos, elem) {
     elem.focus();
-    if (elem.setSelectionRange) elem.setSelectionRange(pos, pos);else if (elem.createTextRange) {
-      let range = elem.createTextRange();
+
+    if (elem.setSelectionRange) {
+      elem.setSelectionRange(pos, pos);
+    } else if (elem.createTextRange) {
+      const range = elem.createTextRange();
       range.collapse(true);
       range.moveEnd(`character`, pos);
       range.moveStart(`character`, pos);
