@@ -7726,7 +7726,7 @@ class Banner {
   }
 
   correctHeight() {
-    const vh = document.documentElement.clientHeight;
+    const vh = window.innerHeight;
     const localMenu = document.querySelector(`.page__local-menu`);
     const pageHeader = document.querySelector(`.page__header`);
     let minHeight = vh;
@@ -7735,7 +7735,8 @@ class Banner {
       minHeight = vh - localMenu.offsetHeight - pageHeader.offsetHeight;
     }
 
-    minHeight = Math.max(minHeight, this.wrap.offsetHeight + pageHeader.offsetHeight);
+    ;
+    minHeight = Math.max(minHeight, this.wrap.offsetHeight);
     this.banner.style.minHeight = minHeight + `px`;
   }
 
@@ -7773,8 +7774,7 @@ class Banner {
 }
 
 if (document.querySelector(`.banner`)) {
-  const bannerObj = new Banner(`.banner`);
-  console.dir(bannerObj);
+  new Banner(`.banner`);
 }
 
 /***/ }),
