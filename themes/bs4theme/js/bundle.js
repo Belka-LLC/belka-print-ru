@@ -7717,38 +7717,30 @@ const banner = document.querySelector(`.banner`);
 const bannerWrap = document.querySelector(`.banner__wrap`);
 const bannerTitle = document.querySelector(`.banner__title`);
 const bannerSlogan = document.querySelector(`.banner__slogan`);
+const vh = document.documentElement.clientHeight;
 
-const correctBannerSize = () => {
+const correctBannerHeight = () => {
   const localMenu = document.querySelector(`.page__local-menu`);
   const pageHeader = document.querySelector(`.page__header`);
-  const vh = document.documentElement.clientHeight;
-  bannerTitle.style.fontSize = ``;
-  bannerSlogan.style.fontSize = ``;
 
   if (localMenu) {
     banner.style.minHeight = 100 * (1 - (localMenu.offsetHeight + pageHeader.offsetHeight) / vh) + `vh`;
   }
+};
 
-  let bannerTitleFontSize = getComputedStyle(bannerTitle).fontSize.slice(0, -2);
-  let bannerSloganFontSize = getComputedStyle(bannerSlogan).fontSize.slice(0, -2);
+const correctBannerFontSizes = () => {
+  bannerTitle.style.fontSize = ``;
+  bannerSlogan.style.fontSize = ``;
+  const bannerTitleFontSize = getComputedStyle(bannerTitle).fontSize.slice(0, -2);
+  const bannerSloganFontSize = getComputedStyle(bannerSlogan).fontSize.slice(0, -2);
   const titleScale = bannerTitle.scrollWidth / bannerTitle.clientWidth;
-  let sloganScale = bannerSlogan.scrollWidth / bannerSlogan.clientWidth;
-
-  if (titleScale > sloganScale) {
-    sloganScale = titleScale;
-  }
-
-  bannerTitleFontSize /= titleScale;
-  bannerSloganFontSize /= sloganScale;
-  bannerTitle.style.fontSize = bannerTitleFontSize + `px`;
-  bannerSlogan.style.fontSize = bannerSloganFontSize + `px`;
-  bannerWrap.style.opacity = 1;
-  stickBannerWrap();
+  const sloganScale = bannerSlogan.scrollWidth / bannerSlogan.clientWidth;
+  const scale = titleScale > sloganScale ? titleScale : sloganScale;
+  bannerTitle.style.fontSize = bannerTitleFontSize / scale + `px`;
+  bannerSlogan.style.fontSize = bannerSloganFontSize / scale + `px`;
 };
 
 const stickBannerWrap = () => {
-  console.log(`stickBannerWrap`);
-
   if (banner.offsetHeight - bannerWrap.offsetHeight > window.pageYOffset) {
     bannerWrap.style.position = `fixed`;
     bannerWrap.style.top = `auto`;
@@ -7757,13 +7749,21 @@ const stickBannerWrap = () => {
     bannerWrap.style.position = `absolute`;
     bannerWrap.style.bottom = 0;
   }
+};
 
-  console.dir(bannerWrap);
+const correctBanner = () => {
+  correctBannerHeight();
+
+  if (document.documentElement.clientWidth < 576) {
+    correctBannerFontSizes();
+  }
+
+  ;
 };
 
 if (banner) {
-  window.addEventListener(`load`, correctBannerSize);
-  window.addEventListener(`resize`, correctBannerSize);
+  window.addEventListener(`load`, correctBanner);
+  window.addEventListener(`resize`, correctBanner);
   window.addEventListener(`scroll`, stickBannerWrap);
 }
 
