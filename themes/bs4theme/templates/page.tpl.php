@@ -23,7 +23,6 @@ if (isset($node)) {
 
 <?php print render($page['notice']); ?>
 <header class="page__header navbar-expand-md">
-  <?php if ($title) : ?><h1 class="sr-only"><?php print $title; ?></h1><?php endif; ?>
   <nav class="main-nav">
     <?php if ($logo) : ?>
       <a class="main-nav__logo" href="<?php print $front_page; ?>" title=" <?php print t('Home'); ?>">
@@ -56,7 +55,9 @@ if (isset($node)) {
               <div class="banner__title-image" <?php print('style = "background-image: url(' . $title_image . ')"'); ?>>
               </div>
             <?php endif; ?>
+            <?php if ($title) : ?>
             <h1 class="banner__title"><?php print $title ?></h1>
+            <?php endif; ?>
             <?php if ($slogan) : ?>
               <div class="banner__slogan"><?php print $slogan ?></div>
             <?php endif; ?>

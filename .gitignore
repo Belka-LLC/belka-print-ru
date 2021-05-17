@@ -1,5 +1,7 @@
 _dev/
 *.json
+*.map
+
 modules/
 files/css/
 files/js/
